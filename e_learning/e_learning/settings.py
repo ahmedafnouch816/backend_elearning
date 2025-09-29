@@ -31,12 +31,16 @@ ALLOWED_HOSTS = []
 # Application definition
 
 INSTALLED_APPS = [
+    'jazzmin',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+    'rest_framework',
+    'rest_framework_simplejwt',
+    'courses',
 ]
 
 MIDDLEWARE = [
@@ -48,6 +52,19 @@ MIDDLEWARE = [
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
 ]
+
+
+# Configuration de l'authentification par token
+REST_FRAMEWORK = {
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework_simplejwt.authentication.JWTAuthentication',  # Pour JWT token
+    ],
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',  # Par défaut, les API nécessitent l'authentification
+    ],
+}
+
 
 ROOT_URLCONF = 'e_learning.urls'
 
@@ -73,12 +90,28 @@ WSGI_APPLICATION = 'e_learning.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/4.0/ref/settings/#databases
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': BASE_DIR / 'db.sqlite3',
+        'ENGINE': 'django.db.backends.postgresql',
+        'NAME': 'newdbs',
+        'USER': 'raj',
+        'PASSWORD': 'Mypassword05',
+        'HOST': '127.0.0.1',
+        'PORT': '6608'
     }
 }
+
+
+AUTH_USER_MODEL = 'courses.User'
+
 
 
 # Password validation
@@ -121,3 +154,13 @@ STATIC_URL = 'static/'
 # https://docs.djangoproject.com/en/4.0/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
+
+
+JAZZMIN_SETTINGS = {
+    "site_title": "My E-Learning Admin",
+    "site_header": "E-Learning Admin Portal",
+    "welcome_sign": "Welcome to the E-Learning Admin",
+    "show_sidebar": True,
+    "navigation_expanded": True,
+    # more options in Jazzmin docs
+}
