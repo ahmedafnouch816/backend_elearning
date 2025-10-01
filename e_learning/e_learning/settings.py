@@ -41,9 +41,11 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'courses',
+    'corsheaders',
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -65,6 +67,12 @@ REST_FRAMEWORK = {
     ],
 }
 
+CORS_ALLOW_ALL_ORIGINS = True
+
+# Autoriser le frontend Angular
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:4200",  # ou ton URL Angular ou chnage in un autre serveur 
+]
 
 ROOT_URLCONF = 'e_learning.urls'
 
